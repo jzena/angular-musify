@@ -15,5 +15,18 @@
   "bugs": {
     "url": "https://github.com/jzena/angular-musify/issues"
   },
-  "homepage": "https://github.com/jzena/angular-musify#readme"
+  "homepage": "https://github.com/jzena/angular-musify#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.16.1",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.18.1",
+    "mongoose": "^4.12.1",
+    "mongoose-pagination": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
 }
