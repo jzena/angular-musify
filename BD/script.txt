@@ -1,0 +1,4 @@
+use curso_mean2
+db.artists.save({name: 'Dellafuente', description: 'Musica Trap Folclorica', image: 'null'});
+db.artists.find();
+show dbs;
