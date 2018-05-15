@@ -36,6 +36,18 @@ export class UserService {
         return this._http.post(this.url + 'register', params, { headers }).pipe(map(res => res.json()));
     }
 
+    updateUser(user_to_update) {
+        let json = JSON.stringify(user_to_update);
+        let params = json;
+
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': this.getToken()
+        });
+        return this._http.put(this.url + 'update-user/' + user_to_update._id, params, { headers })
+            .pipe(map(res => res.json()));
+    }
+
     getIdentity() {
         let identity = JSON.parse(localStorage.getItem('identity'));
         this.identity = null;
@@ -48,7 +60,7 @@ export class UserService {
     }
 
     getToken() {
-        let token = JSON.parse(localStorage.getItem('token'));
+        let token = localStorage.getItem('token');
         this.token = null;
 
         if (token != "undefined") {

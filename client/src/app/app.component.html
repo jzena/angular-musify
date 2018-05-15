@@ -1,17 +1,48 @@
-<div *ngIf="identity" class="navigation col-lg-1">
-  <h1>{{title}}</h1>
-  <span>
-    {{identity.name}} {{identity.surname}}
-  </span>
-  <span class="btn btn-warning" (click)="logout()">
-    Cerrar sesión
-  </span>
-</div>
+<div *ngIf="identity" class="row main-panel">
 
-<div class="clearfix"></div>
+  <div  class="navigation col-lg-1">
+    <h1 class="head-title">
+      <a [routerLink]="['/']">
+        <span class="fa fa-music" aria-hidden="true"></span>
+        {{title}}
+      </a>
+    </h1>
+    <nav id="navigation">
+      <a href="#">
+        <span class="fa fa-search" aria-hidden="true"></span>
+        Buscar
+      </a>
+      <a href="#">
+        <span class="fa fa-star" aria-hidden="true"></span>
+        Artistas
+      </a>
+      <a href="#">
+        <span class="fa fa-book" aria-hidden="true"></span>
+        Albums
+      </a>
+    </nav>
 
-<div *ngIf="identity" class="cental col-lg-11">
-  <p>Estás logueado en la aplicación</p>
+    <nav id="user_logged">
+      <div class="user-image">
+        <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}" alt="avatar"/>
+      </div>
+      <span id="identity_name">
+        {{identity.name}}
+      </span>
+      <a [routerLink]="['/mis-datos']">
+        <span class="fa fa-user" aria-hidden="true"></span>
+        Mis datos
+      </a>
+      <a (click)="logout()" class="btn-logout">
+        <span class="fa fa-power-off" aria-hidden="true"></span>
+        Salir
+      </a>
+    </nav>
+  </div>
+
+  <div *ngIf="identity" class="cental col-lg-11">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 
 <div class="row" *ngIf="!identity">
@@ -42,7 +73,7 @@
 
   <div class="col-lg-6">
     <h1>registrate</h1>
-    
+
     <div *ngIf="alertRegister">
       <div class="alert alert-info">
         {{alertRegister}}
