@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { GLOBAL } from './../services/global';
 import { UserService } from './../services/user.service';
 import { User } from './../models/user';
-import { resolve } from 'dns';
 
 @Component({
     selector: 'user-edit',

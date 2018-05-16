@@ -12,7 +12,7 @@
         <span class="fa fa-search" aria-hidden="true"></span>
         Buscar
       </a>
-      <a href="#">
+      <a [routerLink]="['/artistas', 1]" [routerLinkActive]="['actived']">
         <span class="fa fa-star" aria-hidden="true"></span>
         Artistas
       </a>
@@ -29,7 +29,7 @@
       <span id="identity_name">
         {{identity.name}}
       </span>
-      <a [routerLink]="['/mis-datos']">
+      <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">
         <span class="fa fa-user" aria-hidden="true"></span>
         Mis datos
       </a>
@@ -40,6 +40,7 @@
     </nav>
   </div>
 
+  <!-- <div [class.hidden]="!identity" class="cental col-lg-11"> -->
   <div *ngIf="identity" class="cental col-lg-11">
     <router-outlet></router-outlet>
   </div>

@@ -22,7 +22,7 @@ function saveUser(req, res) {
     user.name = params.name;
     user.surname = params.surname;
     user.email = params.email;
-    user.role = 'ROLE_ADMIN';//params.role;
+    user.role = 'ROLE_USER';//params.role;
     user.image = 'null';
 
     if (params.password) {
