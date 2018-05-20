@@ -43,35 +43,37 @@ export class ArtistListComponent implements OnInit {
     }
 
     getArtists() {
-        let page = +this._route.snapshot.paramMap.get('page');
-        if (!page) {
-            page = 1;
-        } else {
-            this.next_page = page + 1;
-            this.prev_page = page - 1;
+        this._route.params.subscribe(params => {
+            let page = +params['page'];
+            if (!page) {
+                page = 1;
+            } else {
+                this.next_page = page + 1;
+                this.prev_page = page - 1;
 
-            if (this.prev_page == 0) {
-                this.prev_page = 1;
-            }
-
-            this._artistService.getArtists(this.token, page).subscribe(
-                response => {
-                    if (!response.artists) {
-                        this._router.navigate(['/']);
-                    } else {
-                        this.artists = response.artists;
-                    }
-                },
-                error => {
-                    var errorMessage = <any>error;
-                    if (errorMessage != null) {
-                        var body = JSON.parse(error._body);
-                        // this.alertMessage = body.message;
-                        console.log(error);
-                    }
+                if (this.prev_page == 0) {
+                    this.prev_page = 1;
                 }
-            );
-        }
+
+                this._artistService.getArtists(this.token, page).subscribe(
+                    response => {
+                        if (!response.artists) {
+                            this._router.navigate(['/']);
+                        } else {
+                            this.artists = response.artists;
+                        }
+                    },
+                    error => {
+                        var errorMessage = <any>error;
+                        if (errorMessage != null) {
+                            var body = JSON.parse(error._body);
+                            // this.alertMessage = body.message;
+                            console.log(error);
+                        }
+                    }
+                );
+            }
+        });
     }
 
     public confirmado;
