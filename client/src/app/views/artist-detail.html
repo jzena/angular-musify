@@ -9,14 +9,14 @@
                 {{artist.description}}
             </p>
 
-            <a href="#" *ngIf="identity.role == 'ROLE_ADMIN'" class="btn btn-info">
+            <a routerLink="/crear-album/{{artist._id}}" *ngIf="identity.role == 'ROLE_ADMIN'" class="btn btn-info">
                 Añadir Album
             </a>
         </div>
     </div>
 
     <div class="clearfix"></div>
-    
+
     <div id="gallery-albums" *ngIf="albums">
         <!-- Listar los albums -->
     </div>
