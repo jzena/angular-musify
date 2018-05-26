@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from './../services/global';
 import { UserService } from './../services/user.service';
 import { AlbumService } from './../services/album.service';
+import { UploadService } from './../services/upload.service';
 import { Artist } from './../models/artist';
 import { Album } from './../models/album';
 
@@ -11,7 +12,7 @@ import { Album } from './../models/album';
 @Component({
     selector: 'album-edit',
     templateUrl: './../views/album-add.html',
-    providers: [UserService, AlbumService]
+    providers: [UserService, AlbumService, UploadService]
 })
 export class AlbumEditComponent implements OnInit {
     public titulo: string;
@@ -26,7 +27,8 @@ export class AlbumEditComponent implements OnInit {
         private _route: ActivatedRoute,
         private _router: Router,
         private _userService: UserService,
-        private _albumService: AlbumService
+        private _albumService: AlbumService,
+        private _uploadService: UploadService
     ) {
 
         this.titulo = 'Editar album';
@@ -39,20 +41,62 @@ export class AlbumEditComponent implements OnInit {
 
     ngOnInit() {
         console.log('album edit component loaded');
+
+        // Conseguir el Album
+        this.getAlbum();
+    }
+
+    getAlbum() {
+        const id = this._route.snapshot.paramMap.get('id');
+        this._albumService.getAlbum(this.token, id).subscribe(
+            response => {
+                if (!response.album) {
+                    this._router.navigate(['/']);
+                } else {
+                    this.album = response.album;
+                }
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    var body = JSON.parse(error._body);
+                    console.log(error);
+                }
+            }
+        );
     }
 
     onSubmit() {
-        const artist_id = this._route.snapshot.paramMap.get('artist');
-        this.album.artist = artist_id;
+        const id = this._route.snapshot.paramMap.get('id');
 
-        this._albumService.addAlbum(this.token, this.album).subscribe(
+        this._albumService.editAlbum(this.token, id, this.album).subscribe(
             response => {
                 if (!response.album) {
                     this.alertMessage = 'Error en el servidor';
                 } else {
-                    this.alertMessage = 'El album se ha creado correctamente';
-                    this.album = response.album;
-                    // this._router.navigate(['/editar-artista', response.artist._id]);
+                    this.alertMessage = 'El album se ha actualizado correctamente';
+
+                    if (!this.filesToUpload) {
+                        // Redirigir
+                        this._router.navigate(['/artista', response.album.artist]);
+                    } else {
+
+                        // subir la imagen del album
+                        this._uploadService.makeFileRequest(
+                            this.url + 'upload-image-album/' + id,
+                            [],
+                            this.filesToUpload,
+                            this.token,
+                            'image'
+                        ).then(
+                            (result) => {
+                                this._router.navigate(['/artista', response.album.artist]);
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                    }
                 }
             },
             error => {
@@ -66,6 +110,11 @@ export class AlbumEditComponent implements OnInit {
         );
 
         console.log(this.album);
+    }
+
+    public filesToUpload: Array<File>;
+    fileChangeEvent(fileInput: any) {
+        this.filesToUpload = <Array<File>>fileInput.target.files;
     }
 
 }

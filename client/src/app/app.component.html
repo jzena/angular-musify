@@ -1,6 +1,6 @@
 <div *ngIf="identity" class="row main-panel">
 
-  <div  class="navigation col-lg-1">
+  <div class="navigation col-lg-1">
     <h1 class="head-title">
       <a [routerLink]="['/']">
         <span class="fa fa-music" aria-hidden="true"></span>
@@ -24,7 +24,7 @@
 
     <nav id="user_logged">
       <div class="user-image">
-        <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}" alt="avatar"/>
+        <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}" alt="avatar" />
       </div>
       <span id="identity_name">
         {{identity.name}}
@@ -41,8 +41,10 @@
   </div>
 
   <!-- <div [class.hidden]="!identity" class="cental col-lg-11"> -->
-  <div *ngIf="identity" class="cental col-lg-11">
+  <div *ngIf="identity" class="central col-lg-11">
     <router-outlet></router-outlet>
+    <div class="clearfix"></div>
+    <player class="player" *ngIf="identity"></player>
   </div>
 </div>
 
