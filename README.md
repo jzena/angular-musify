@@ -15,3 +15,7 @@ To launch the project, run the following commands:
 - `cd client`
 - `npm install` to install all dependencies.
 - `ng serve` to launch the API project.
+
+## Run application
+- user: admin@admin.com
+- pwd: admin
